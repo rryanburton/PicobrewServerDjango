@@ -1,8 +1,8 @@
-from pybeerxml import recipe
+from pybeerxml.recipe import Recipe
 import hashlib
 
 
-class PicoBrewRecipe(recipe):
+class PicoBrewRecipe(Recipe):
     def __init__(self, parent):
         self.__dict__ = parent.__dict__
 

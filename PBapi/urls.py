@@ -19,12 +19,12 @@ from django.contrib import admin
 from PBapi.views import (
     parse_recipe_request,
     check_sync,
-    # parse_session_request,
+    parse_session_request,
 )
 
 urlpatterns = [
     url(r'^SyncUser/$', parse_recipe_request),
-    # url(r'^checksync/$', check_sync()),
-    # url(r'^LogSession/$', parse_session_request()),
+    url(r'^checksync/$', check_sync),
+    url(r'^LogSession/$', parse_session_request),
 
 ]
