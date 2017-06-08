@@ -15,7 +15,7 @@ class Parser(object):
     def nodes_to_object(self, node, object):
         "Map all child nodes to one object's attributes"
 
-        assert(len(list(node)) > 1)
+        # assert(len(list(node)) > 1)
 
         for n in list(node):
             self.node_to_object(n, object)
@@ -90,7 +90,7 @@ class Parser(object):
                             for mash_step_node in list(mash_node):
                                 mash_step = MashStep()
                                 self.nodes_to_object(mash_step_node, mash_step)
-                                mash.steps.append(mash_step)
+                                mash.mash_steps.append(mash_step)
                         else:
                             self.nodes_to_object(mash_node, mash)
 

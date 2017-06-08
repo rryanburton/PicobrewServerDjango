@@ -1,11 +1,13 @@
 class MashStep(object):
     def __init__(self):
+        self.name = None
+        self.version = None
         self.type = None
         self.infuse_amount = None
         self.step_temp = None
-        self.end_temp = None
         self.step_time = None
-        self.decoction_amt = None
+        self.ramp_time = None
+        self.end_temp = None
 
         @property
         def waterRatio(self):

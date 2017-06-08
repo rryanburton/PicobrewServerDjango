@@ -6,13 +6,15 @@ import time
 import uuid
 from functools import reduce
 
+from werkzeug.exceptions import *
+
 from webargs.djangoparser import use_args, DjangoParser, use_kwargs
 from marshmallow import fields
 from django.shortcuts import render
 from django.http import HttpResponse
 
 from beerxml.picobrew_parser import PicoBrewParser as BeerXMLParser
-
+from frontend.views import get_recipes
 
 SYSTEM_USER = "00000000000000000000000000000000"
 arg_parser = DjangoParser()
@@ -32,7 +34,7 @@ sync_args = {
 def parse_recipe_request(request, args):
     user = args['user']
     machine = args['machine']
-    print("user: {}, machine: {}".format(user, machine))
+    print(("user: {}, machine: {}".format(user, machine)))
     if user == SYSTEM_USER:
         return get_cleaning_recipes()
     else:
@@ -55,8 +57,8 @@ def get_cleaning_recipes():
 
 def get_picobrew_recipes():
     all_recipes = get_recipes()
-    filtered_recipes = filter(lambda recipe: recipe.steps, all_recipes)
-    recipes = map(lambda recipe: recipe.serialize(), filtered_recipes)
+    filtered_recipes = [recipe for recipe in all_recipes if recipe.steps]
+    recipes = [recipe.serialize() for recipe in filtered_recipes]
     recipes = "|".join(recipes)
 
     return "#{0}|#".format(recipes)
@@ -167,24 +169,62 @@ def log_to_session(session_id, args):
 
     return ""
 
-
-def get_recipes(recipe_path = "recipes"):
-
-    files = filter(filter_by_extensions , os.listdir("recipes"))
-    files = [os.path.join(recipe_path, filename) for filename in files]
-
-    recipes = [get_recipe(file) for file in files]
-    recipes = reduce(lambda x,y: x+y, recipes) # flatten dat shit
-
-    return recipes
-
-
-def get_recipe(file):
-
-    parser = BeerXMLParser()
-    return parser.parse(file)
+# ############################################################################
+#
+#
+# def get_recipes(recipe_path="recipes"):
+#
+#     files = list(filter(filter_by_extensions, os.listdir("recipes")))
+#     files = [os.path.join(recipe_path, filename) for filename in files]
+#
+#     recipes = [get_recipe(file) for file in files]
+#     recipes = reduce(lambda x, y: x+y, recipes)  # flatten dat shit
+#
+#     return recipes
+#
+#
+# def get_recipe(file):
+#
+#     parser = BeerXMLParser()
+#     return parser.parse(file)
 
 
 # -------- Utility --------
 def filter_by_extensions(filename):
-    return filter(lambda ext: ext in filename, ["xml", "beerxml"])
+    return [ext for ext in ["xml", "beerxml"] if ext in filename]
+
+
+# ----------- SESSION RECOVERY -----------
+
+session_recovery_args = {"session": fields.Str(),
+                         "code": fields.Int(),
+                         }
+
+
+@use_args(session_recovery_args)
+def parse_session_recovery_request(session, code):
+    try:
+        session_file = "{0}.json".format(session)
+
+        with open(os.path.join(SESSION_PATH, session_file), 'r') as in_file:
+            session = json.load(in_file)
+
+            if code == 0:
+                # return a recipe
+                try:
+                    recipes = get_recipe(session["recipe_filename"])
+                    recipe = recipes[0]  # per spec a BeerXML file can contain more than one recipe
+                    return "#{0}|!#".format(recipe.serialize())
+
+                except IOError:
+                    abort()
+
+            elif code == 1:
+                # return machine params
+                return "#{0}#".format(session["machine_state"])
+
+    except IOError:
+        abort()
+
+    # default fallthrough
+    abort()

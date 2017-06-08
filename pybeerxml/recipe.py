@@ -1,26 +1,64 @@
 class Recipe(object):
     def __init__(self):
         self.name = None
+        self.version = None
+        self.type = None
+        self.style = []
+        self.equipment = None
         self.brewer = None
+        self.asst_brewer = None
         self.batch_size = None
         self.boil_time = None
         self.efficiency = None
+        self.hops = []
+        self.fermentables = []
+        self.miscs = None
+        self.yeasts = []
+        self.waters = []
+        self.mash = []
+        self.notes = None
+        self.taste_notes = None
+        self.taste_rating = None
+        self.og = None
+        self.fg = None
+        self.fermentation_stages = None
         self.primary_age = None
         self.primary_temp = None
         self.secondary_age = None
         self.secondary_temp = None
         self.tertiary_age = None
         self.tertiary_temp = None
-        self.carbonation = None
-        self.carbonation_temp = None
         self.age = None
         self.age_temp = None
+        self.date = None
+        self.carbonation = None
+        self.forced_carbonation = None
+        self.priming_sugar_name = None
+        self.carbonation_temp = None
+        self.priming_sugar_equiv = None
+        self.keg_priming_factor = None
 
-        self.style = None
-        self.hops = []
-        self.yeasts = []
-        self.fermentables = []
-        self.mash = None
+        # EST_OG
+        # EST_FG
+        # EST_COLOR
+        # IBU
+        # IBU_METHOD
+        # EST_ABV
+        # ABV
+        # ACTUAL_EFFICIENCY
+        # CALORIES
+        # DISPLAY_BATCH_SIZE
+        # DISPLAY_BOIL_SIZE
+        # DISPLAY_OG
+        # DISPLAY_FG
+        # DISPLAY_PRIMARY_TEMP
+        # DISPLAY_SECONDARY_TEMP
+        # DISPLAY_TERTIARY_TEMP
+        # DISPLAY_AGE_TEMP
+        # CARBONATION_USED
+        # DISPLAY_CARB_TEMP
+
+
 
     @property
     def abv(self):
@@ -50,7 +88,7 @@ class Recipe(object):
         return _ibu
 
     @property
-    def og(self):
+    def og_adj(self):
 
         _og = 1.0
         steep_efficiency = 50
@@ -99,8 +137,8 @@ class Recipe(object):
     def fg(self, value):
         pass
 
-    @og.setter
-    def og(self, value):
+    @og_adj.setter
+    def og_adj(self, value):
         pass
 
     @abv.setter

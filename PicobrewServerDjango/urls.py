@@ -17,17 +17,28 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 
+from frontend.views import index, recipes
+
+from frontend.views import (
+    upload_recipe,
+    validate,
+    validate_recipe,
+)
 
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^API/', include('PBapi.urls')),
+    url(r'^recipes', recipes, name="recipes"),
+    url(r'^upload$', upload_recipe),
+    url(r'^validate/$', validate, name="validate"),
+    url(r'^validate_recipe/$', validate_recipe),
+    url(r'^$', index, name="index")
 ]
 
 
 if settings.DEBUG:
     import debug_toolbar
-
-    urlpatterns += [
+    urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
-    ]
+    ] + urlpatterns

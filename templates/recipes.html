@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load frontend_extras %}
 {% block content %}
 <div class="row recipe-dashboard">
 
@@ -15,18 +15,18 @@
             </div>
             <div class="card-content white-text">
                 <ul>
-                    <li class="glass">IBU {{ format_float(recipe.ibu, 0) }}</li>
-                    <li class="glass">OG {{ format_float(recipe.og, 3) }} / FG {{ format_float(recipe.fg, 3) }}</li>
-                    <li class="glass">Batch Size {{ format_volume(recipe.batch_size) }}</li>
+                    <li class="glass">IBU {%   format_float recipe.ibu 0 %}</li>
+                    <li class="glass">OG {% format_float recipe.og 3 %} / FG {% format_float recipe.fg 3  %}</li>
+                    <li class="glass">Batch Size {% format_volume recipe.batch_size  %}</li>
                 </ul>
                 <ul>
                     {% for fermentable in recipe.fermentables %}
-                        <li class="grain">{{ format_weight(fermentable.amount) }} {{ fermentable.name }}</li>
+                        <li class="grain">{% format_weight fermentable.amount  %} {{ fermentable.name }}</li>
                     {% endfor %}
                 </ul>
                 <ul>
                     {% for hop in recipe.hops %}
-                        <li class="hop">{{ format_weight(hop.amount, "g") }} {{ hop.name }} ({{ hop.alpha }}AA @ {{ format_time(hop.time) }})</li>
+                        <li class="hop">{% format_weight hop.amount  "g"  %} {{ hop.name }} ({{ hop.alpha }}AA @ {% format_time hop.time %})</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -35,11 +35,16 @@
                     <li>
                         <div class="collapsible-header"><i class="material-icons left">view_list</i> See Mash Schedule</div>
                         <div class="collapsible-body">
+                        {% for step in recipe.mash_steps %}
+                            <li>
+                            {{ step.name }} - {{ step.step_temp }} - {{ step.step_time }}
+                            </li>
+                        {% endfor %}
                         {% if recipe.steps %}
                             <ol>
                                 {% for step in recipe.steps %}
                                     <li>
-                                        {{ step.name }} ({{ format_float(step.temp, 0) }}F @ {{ format_time(step.time) }})
+                                        {{ step.name }} ({% format_float step.temp 0 %}F @ {% format_time step.time  %})
                                     </li>
                                 {% endfor %}
                             </ol>

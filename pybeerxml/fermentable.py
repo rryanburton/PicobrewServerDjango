@@ -8,10 +8,22 @@ class Fermentable(object):
 
     def __init__(self):
         self.name = None
+        self.version = None
+        self.type = None
         self.amount = None
         self._yield = None
         self.color = None
         self._add_after_boil = None  # Should be Bool
+        self.origin = None
+        self.supplier = None
+        self.notes = None
+        self.coarse_fine_diff = None
+        self.moisture = None
+        self.diastatic_power = None
+        self.protein = None
+        self.max_in_batch = None
+        self.recommend_mash = None
+        self.ibu_gal_per_lb = None
 
     @property
     def add_after_boil(self):

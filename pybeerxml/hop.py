@@ -2,14 +2,25 @@ import math
 
 
 class Hop(object):
+
     def __init__(self):
         self.name = None
+        self.version = None
         self.alpha = None
         self.amount = None
         self.use = None
-        self.form = None
-        self.notes = None
         self.time = None
+        self.notes = None
+        self.type = None
+        self.form = None
+        self.beta = None
+        self.hsi = None
+        self.origin = None
+        self.substitutes = None
+        self.humulene = None
+        self.caryophyllene = None
+        self.cohumulone = None
+        self.myrcene = None
 
     def utilization_factor(self):
         "Account for better utilization from pellets vs. whole"
