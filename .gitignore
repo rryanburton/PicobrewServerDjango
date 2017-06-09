@@ -142,3 +142,4 @@ ENV/
 *.bak
 /static/
 /db.sqlite3
+.idea
