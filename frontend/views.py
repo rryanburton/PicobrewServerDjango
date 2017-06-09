@@ -69,7 +69,6 @@ def upload_recipe(request):
     return redirect(redirect_url)
 
 
-
 # @frontend.route("/validate")
 def validate(request):
 
@@ -79,11 +78,11 @@ def validate(request):
     print("recipe: {}".format(recipe))
     return render(request, "validate.html", {'recipe': recipe})
 
+
 # @frontend.route("/validate_recipe", methods=["POST"])
 def validate_recipe(request):
-
     redirect_url = "recipes"
-    form_data = request.form
+    form_data = request.POST
 
     if not form_data.getlist("accept_eula") or form_data.getlist("action") == "cancel":
         file = request.session["recipe_file"]
