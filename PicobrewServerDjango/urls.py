@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^recipes', recipes, name="recipes"),
     url(r'^upload$', upload_recipe),
     url(r'^validate/$', validate, name="validate"),
-    url(r'^validate_recipe/$', validate_recipe),
+    url(r'^validate_recipe$', validate_recipe),
     url(r'^$', index, name="index")
 ]
 

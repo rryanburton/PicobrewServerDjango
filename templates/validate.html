@@ -14,7 +14,7 @@
                     </div>
                 </div>
 
-                {% if not recipe.steps %}
+                {% if not recipe.mash.mash_steps %}
                     <div class="row">
                         <div class="col s12">
                             Unfortunately, we could not find an mashing steps in this recipe. Make sure to export your recipes from the PicoBrew website.
@@ -52,7 +52,7 @@
                                 </thead>
 
                                 <tbody>
-                                {% for step in recipe.steps %}
+                                {% for step in recipe.mash.mash_steps %}
 
                                     <tr>
                                         <td>{{ step.name }}</td>

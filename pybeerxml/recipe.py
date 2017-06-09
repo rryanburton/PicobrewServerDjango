@@ -37,7 +37,7 @@ class Recipe(object):
         self.carbonation_temp = None
         self.priming_sugar_equiv = None
         self.keg_priming_factor = None
-
+        self.filename = None
         # EST_OG
         # EST_FG
         # EST_COLOR

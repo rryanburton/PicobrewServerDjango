@@ -8,9 +8,9 @@
             <div class="card-header white-text">
                 <span class="card-title">{{ recipe.name }}</span>
                 <div>{{ recipe.style.name }} by {{ recipe.brewer }}
-                    {% if not recipe.steps %}
-                        <i class="material-icons tooltipped right" data-position="bottom" data-delay="50" data-tooltip="There are no mashing steps for this recipe. Not synced with PicoBrew.">error</i>
-                    {% endif %}
+{#                    {% if not recipe.steps %}#}
+{#                        <i class="material-icons tooltipped right" data-position="bottom" data-delay="50" data-tooltip="There are no mashing steps for this recipe. Not synced with PicoBrew.">error</i>#}
+{#                    {% endif %}#}
                 </div>
             </div>
             <div class="card-content white-text">
@@ -29,20 +29,28 @@
                         <li class="hop">{% format_weight hop.amount  "g"  %} {{ hop.name }} ({{ hop.alpha }}AA @ {% format_time hop.time %})</li>
                     {% endfor %}
                 </ul>
+{#                <ul>#}
+{#                    Name: {{ recipe.mash }}#}
+{#                    {% for step in recipe.mash.mash_steps %}#}
+{#                        <li>#}
+{#                            Name: {{ step.name }} - temp {{ step.step_temp }} - {{ step.step_time }}#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
             </div>
             <div class="card-action">
                 <ul class="collapsible" data-collapsible="accordion">
                     <li>
                         <div class="collapsible-header"><i class="material-icons left">view_list</i> See Mash Schedule</div>
                         <div class="collapsible-body">
-                        {% for step in recipe.mash_steps %}
-                            <li>
-                            {{ step.name }} - {{ step.step_temp }} - {{ step.step_time }}
-                            </li>
-                        {% endfor %}
-                        {% if recipe.steps %}
+{#                        {% for step in recipe.mash_step %}#}
+{#                            <li>#}
+{#                           name: {{ step.name }} - temp {{ step.step_temp }} - {{ step.step_time }}#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+                        {% if recipe.mash.mash_steps %}
                             <ol>
-                                {% for step in recipe.steps %}
+                                {% for step in recipe.mash.mash_steps %}
                                     <li>
                                         {{ step.name }} ({% format_float step.temp 0 %}F @ {% format_time step.time  %})
                                     </li>

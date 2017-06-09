@@ -14,7 +14,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from beerxml.picobrew_parser import PicoBrewParser as BeerXMLParser
-from frontend.views import get_recipes
+from frontend.views import get_recipes, get_recipe
 
 SYSTEM_USER = "00000000000000000000000000000000"
 arg_parser = DjangoParser()
