@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% load frontend_extras %}
+{% load staticfiles %}
 {% block content %}
 <div class="row recipe-dashboard">
-
     {% for recipe in recipes %}
         <div class="card blue-grey darken-1">
             <div class="card-header white-text">
                 <span class="card-title">{{ recipe.name }}</span>
                 <div>{{ recipe.style.name }} by {{ recipe.brewer }}
-{#                    {% if not recipe.steps %}#}
-{#                        <i class="material-icons tooltipped right" data-position="bottom" data-delay="50" data-tooltip="There are no mashing steps for this recipe. Not synced with PicoBrew.">error</i>#}
-{#                    {% endif %}#}
+                    <br/>  Boil time: {% format_time recipe.boil_time %}
+                    {% if not recipe.mash.mash_steps %}
+                        <i class="material-icons tooltipped right" data-position="bottom" data-delay="50" data-tooltip="There are no mashing steps for this recipe. Not synced with PicoBrew.">error</i>
+                    {% endif %}
                 </div>
             </div>
             <div class="card-content white-text">
@@ -29,30 +30,18 @@
                         <li class="hop">{% format_weight hop.amount  "g"  %} {{ hop.name }} ({{ hop.alpha }}AA @ {% format_time hop.time %})</li>
                     {% endfor %}
                 </ul>
-{#                <ul>#}
-{#                    Name: {{ recipe.mash }}#}
-{#                    {% for step in recipe.mash.mash_steps %}#}
-{#                        <li>#}
-{#                            Name: {{ step.name }} - temp {{ step.step_temp }} - {{ step.step_time }}#}
-{#                        </li>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
             </div>
             <div class="card-action">
                 <ul class="collapsible" data-collapsible="accordion">
                     <li>
                         <div class="collapsible-header"><i class="material-icons left">view_list</i> See Mash Schedule</div>
                         <div class="collapsible-body">
-{#                        {% for step in recipe.mash_step %}#}
-{#                            <li>#}
-{#                           name: {{ step.name }} - temp {{ step.step_temp }} - {{ step.step_time }}#}
-{#                            </li>#}
-{#                        {% endfor %}#}
                         {% if recipe.mash.mash_steps %}
                             <ol>
+{#                            Name: {{ recipe.mash.name }}#}
                                 {% for step in recipe.mash.mash_steps %}
                                     <li>
-                                        {{ step.name }} ({% format_float step.temp 0 %}F @ {% format_time step.time  %})
+                                        {{ step.name }} ({% format_float step.step_temp 0 %}F @ {% format_time step.step_time  %})
                                     </li>
                                 {% endfor %}
                             </ol>
@@ -65,6 +54,5 @@
             </div>
         </div>
     {% endfor %}
-
 </div>
 {% endblock %}

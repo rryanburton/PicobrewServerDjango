@@ -63,15 +63,15 @@ li.hop:before, li.grain:before, li.glass:before {
 }
 
 li.hop:before {
-    background-image: url("/static/img/hop.svg");
+    background-image: url("../img/hop.svg");
 }
 
 li.grain:before {
-    background-image: url("/static/img/grain.svg");
+    background-image: url("../img/grain.svg");
 }
 
 li.glass:before {
-    background-image: url("/static/img/glass.svg");
+    background-image: url("../img/glass.svg");
 }
 
 .recipe-dashboard > div {

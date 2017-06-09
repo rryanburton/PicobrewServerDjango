@@ -30,9 +30,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^API/', include('PBapi.urls')),
     url(r'^recipes', recipes, name="recipes"),
-    url(r'^upload$', upload_recipe),
+    url(r'^upload$', upload_recipe, name="upload"),
     url(r'^validate/$', validate, name="validate"),
-    url(r'^validate_recipe$', validate_recipe),
+    url(r'^validate_recipe$', validate_recipe, name="validate_recipe"),
     url(r'^$', index, name="index")
 ]
 
