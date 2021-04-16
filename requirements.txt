@@ -1,7 +1,7 @@
 werkzeug
 appdirs==1.4.3
 Django==1.11.1
-django-debug-toolbar==1.8
+django-debug-toolbar==1.11.1
 docutils==0.13.1
 marshmallow==2.13.5
 packaging==16.8
